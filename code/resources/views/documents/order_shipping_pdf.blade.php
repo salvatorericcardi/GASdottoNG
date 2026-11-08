@@ -18,7 +18,7 @@ foreach($data->contents as $d) {
 
 ?>
 
-<html>
+<html lang="{{ htmlLang() }}">
     <head>
         <style>
             table {
@@ -43,11 +43,21 @@ foreach($data->contents as $d) {
                 padding: 4px;
             }
 
+            .open-cell {
+                border-top: 1px solid #000;
+                display: table-cell;
+                padding: 4px;
+            }
+
             .cell.last-row {
                 border-bottom: 1px solid #000;
             }
 
             .cell.last-in-row {
+                border-right: 1px solid #000;
+            }
+
+            .open-cell.last-in-row {
                 border-right: 1px solid #000;
             }
 
@@ -113,13 +123,13 @@ foreach($data->contents as $d) {
 
         <br/><hr><br/>
 
-        <?php
+        @php
 
         $total = 0;
         $full_modifiers = [];
         $previous_shipping = null;
 
-        ?>
+        @endphp
 
         @foreach($data->contents as $d)
             @if($circles->sortedByUser() === false && $previous_shipping != $d->circles_sorting)
@@ -134,9 +144,11 @@ foreach($data->contents as $d) {
             @endif
 
             <div class="extended">
-                {!! join('<br>', array_filter($d->user)) !!}
+                <h3>
+                    {!! join('<br>', array_filter($d->user)) !!}
+                </h3>
 
-                <?php
+                @php
 
                 $booking_total = 0;
                 $booking_modifiers = [];
@@ -154,28 +166,46 @@ foreach($data->contents as $d) {
                     }
                 }
 
-                ?>
+                @endphp
             </div>
 
             <div class="main-wrapper">
                 @foreach($d->products as $product)
                     <div class="row">
-                        @foreach($product as $p)
-                            @php
+                        @if(is_string($product))
+                            <!--
+                            Quando trovo una stringa in luogo di un prodotto, lo
+                            tratto come una riga con una cella unica nella
+                            tabella.
+                            Di solito, è l'intestazione col nome del fornitore
+                            nei documenti degli ordini aggregati con più
+                            fornitori.
+                            -->
+                            <div class="cell">
+                                <strong>{{ $product }}</strong>
+                            </div>
 
-                            $extraclass = [];
+                            @for($i = 0; $i < count($fields->product_columns_names) - 1; $i++)
+                                <div class="open-cell {{ $i == count($fields->product_columns_names) - 2 ? 'last-in-row' : '' }}">&nbsp;</div>
+                            @endfor
+                        @else
+                            @foreach($product as $p)
+                                @php
 
-                            if ($loop->last) {
-                                $extraclass[] = 'last-in-row';
-                            }
+                                $extraclass = [];
 
-                            if ($loop->parent->last) {
-                                $extraclass[] = 'last-row';
-                            }
+                                if ($loop->last) {
+                                    $extraclass[] = 'last-in-row';
+                                }
 
-                            @endphp
-                            <div class="cell {{ join(' ', $extraclass) }}">{{ $p }}</div>
-                        @endforeach
+                                if ($loop->parent->last) {
+                                    $extraclass[] = 'last-row';
+                                }
+
+                                @endphp
+                                <div class="cell {{ join(' ', $extraclass) }}">{{ $p }}</div>
+                            @endforeach
+                        @endif
                     </div>
                 @endforeach
             </div>

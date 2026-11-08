@@ -6,8 +6,10 @@
 
 namespace App\Printers\Concerns;
 
+use App\Helpers\CirclesFilter;
 use App\Formatters\User as UserFormatter;
 use App\Formatters\Order as OrderFormatter;
+use App\Printers\PrintParams;
 use App\ModifiedValue;
 
 trait Shipping
@@ -47,15 +49,13 @@ trait Shipping
     {
         $original_booking_status = null;
 
-        if ($status == 'pending') {
-            if ($booking->status == 'shipped' || $booking->status == 'saved') {
-                $original_booking_status = $booking->status;
-                $booking->status = $status;
+        if ($status == 'pending' && ($booking->status == 'shipped' || $booking->status == 'saved')) {
+            $original_booking_status = $booking->status;
+            $booking->status = $status;
 
-                if ($isolate_friends === false) {
-                    foreach ($booking->friends_bookings as $friend) {
-                        $friend->status = $status;
-                    }
+            if ($isolate_friends === false) {
+                foreach ($booking->friends_bookings as $friend) {
+                    $friend->status = $status;
                 }
             }
         }
@@ -76,7 +76,7 @@ trait Shipping
         }
     }
 
-    public function formatShipping($order, $params, $circles)
+    public function formatShipping($order, PrintParams $params, CirclesFilter $circles)
     {
         $ret = (object) [
             'headers' => $params->fields->headers,
@@ -86,15 +86,7 @@ trait Shipping
         $formattable_product = OrderFormatter::formattableColumns('shipping');
         $internal_offsets = $this->offsetsByStatus($params->status);
 
-        if ($params->isolate_friends === false) {
-            $bookings = $order->topLevelBookings(null);
-            $products_source = 'products_with_friends';
-        }
-        else {
-            $bookings = $order->bookings;
-            $products_source = 'products';
-        }
-
+        $bookings = $params->getBookings($order);
         $bookings = $circles->sortBookings($bookings);
         $listed_products = [];
 
@@ -115,12 +107,15 @@ trait Shipping
                 'circles_sorting' => $circles->bookingSorting($booking),
 
                 'user' => UserFormatter::format($booking->user, $params->fields->user_columns, $order->aggregate),
+                'supplier' => $order->supplier,
                 'products' => [],
                 'totals' => [],
                 'notes' => ! empty($booking->notes) ? [$booking->notes] : [],
             ];
 
-            foreach ($booking->$products_source as $booked) {
+            $products = $params->getProducts($booking);
+
+            foreach ($products as $booked) {
                 if (isset($listed_products[$booked->product_id])) {
                     $product = $listed_products[$booked->product_id];
                     $booked->setRelation('product', $product);

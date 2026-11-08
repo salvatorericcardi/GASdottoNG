@@ -145,4 +145,24 @@ class PrintParams
 
         return $price_offset;
     }
+
+    public function getBookings($order)
+    {
+        if ($this->isolate_friends === false) {
+            return $order->topLevelBookings(null);
+        }
+        else {
+            return $order->bookings;
+        }
+    }
+
+    public function getProducts($booking)
+    {
+        if ($this->isolate_friends === false) {
+            return $booking->products_with_friends;
+        }
+        else {
+            return $booking->products;
+        }
+    }
 }

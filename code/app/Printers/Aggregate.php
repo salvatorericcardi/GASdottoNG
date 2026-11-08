@@ -52,6 +52,13 @@ class Aggregate extends Printer
                 foreach ($td_row->contents as $td) {
                     $found = false;
 
+                    /*
+                        Qui forzo nell'array dei prodotti la stringa col nome
+                        del fornitore. Questo verrà poi gestito nella
+                        formattazione del documento
+                    */
+                    $td->products = array_merge([$td->supplier->printableName()], $td->products);
+
                     foreach ($data->contents as $d) {
                         if ($d->user_id == $td->user_id) {
                             $d->products = array_merge($d->products, $td->products);
@@ -115,7 +122,9 @@ class Aggregate extends Printer
 
             foreach ($data->contents as $c) {
                 foreach ($c->products as $p) {
-                    $flat_contents[] = array_merge($c->user, $p);
+                    if (is_array($p)) {
+                        $flat_contents[] = array_merge($c->user, $p);
+                    }
                 }
             }
 
