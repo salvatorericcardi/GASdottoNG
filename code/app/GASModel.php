@@ -73,12 +73,25 @@ trait GASModel
             $avatar = $this->formatAvatar();
         }
 
-        return sprintf('<span class="header-name">%s%s</span>', $avatar, $this->printableName());
+        return $avatar . $this->printableName();
+    }
+
+    protected function headerSubName()
+    {
+        return '';
     }
 
     public function printableHeader()
     {
-        return $this->headerName() . $this->headerIcons();
+        $name = $this->headerName();
+        $subname = $this->headerSubName();
+        $icons = $this->headerIcons();
+
+        if (filled($subname)) {
+            $subname = sprintf('<br/><small class="text-muted">%s</small>', $subname);
+        }
+
+        return sprintf('<span class="header-name">%s</span>%s%s', $name, $subname, $icons);
     }
 
     public function printableDate($name)

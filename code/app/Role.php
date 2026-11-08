@@ -114,7 +114,7 @@ class Role extends Model implements AutoReadsFields
             $iterated[] = $step->id;
         }
 
-        return sprintf('<span class="header-name">%s</span>', $name);
+        return $name;
     }
 
     public function usersByTarget($target)
@@ -416,13 +416,12 @@ class Role extends Model implements AutoReadsFields
 
     public function autoreadField($name, $request): AutoReadOperation
     {
-        switch ($name) {
-            case 'actions':
-                $this->actions = implode(',', $request->input('actions') ?? []);
-
-                return AutoReadOperation::Managed;
+        if ($name == 'actions') {
+            $this->actions = implode(',', $request->input('actions') ?? []);
+            return AutoReadOperation::Managed;
         }
-
-        return AutoReadOperation::Auto;
+        else {
+            return AutoReadOperation::Auto;
+        }
     }
 }

@@ -214,9 +214,9 @@ class Aggregate extends Model
         });
     }
 
-    public function headerName()
+    protected function headerSubName()
     {
-        return $this->formatAvatar() . $this->printableName() . sprintf('<br/><small class="text-muted">%s</small>', $this->printableDates());
+        return $this->printableDates();
     }
 
     public function printableUserHeader()
