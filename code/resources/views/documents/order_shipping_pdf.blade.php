@@ -79,10 +79,10 @@ foreach($data->contents as $d) {
 
             h3, h4 {
                 width: 100%;
-                background-color: #555;
+                background-color: #666;
                 color: #FFF;
                 text-align: center;
-                padding: 5px;
+                padding: 5px 0;
             }
         </style>
 
