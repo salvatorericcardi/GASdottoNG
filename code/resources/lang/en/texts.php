@@ -444,6 +444,7 @@ return array(
         'error_main' => 'Error uploading or reading file.',
         'error_retry' => 'Please try again or submit a bug to GASdotto developers: info@madbob.org',
         'existing_products_action' => 'Existing Products',
+        'force_sorting' => 'Enforce sorting',
         'no_products' => 'No Updatable Product',
     ),
     'invoices' => array(

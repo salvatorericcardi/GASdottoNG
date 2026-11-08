@@ -443,6 +443,7 @@ return array(
         'error_main' => 'Fehler beim Laden oder Lesen der Datei.',
         'error_retry' => 'Bitte erneut versuchen, oder sich mit den Entwicklern von GASdotto in Verbindung zu setzen: info@madbob.org',
         'existing_products_action' => 'bestellte Produkte',
+        'force_sorting' => '',
         'no_products' => 'Kein Produkt aktualisierbar',
     ),
     'invoices' => array(

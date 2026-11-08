@@ -242,6 +242,9 @@ class Products extends CSVImporter
         $errors = $products = $products_ids = $new_categories = $new_measures = $new_vats = [];
         $service = app()->make('ProductsService');
 
+        $force_sort = $request['force_sort'] ?? 'no';
+        $sorter = 0;
+
         foreach ($request['import'] as $index) {
             try {
                 $fields = [];
@@ -282,6 +285,10 @@ class Products extends CSVImporter
 
                     return $vat;
                 });
+
+                if ($force_sort == 'yes') {
+                    $fields['sorting'] = $sorter++;
+                }
 
                 if ($ex_novo) {
                     $p = $service->store($fields);

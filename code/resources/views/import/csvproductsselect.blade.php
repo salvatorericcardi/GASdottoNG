@@ -23,8 +23,18 @@ $vat_rates = App\VatRate::orderBy('percentage', 'asc')->get();
             <input type="hidden" name="sorted_fields" value="{{ join(',', $sorted_fields) }}">
 
             <div class="row">
-                <div class="col-md-6">
-                    <x-larastrap::radios name="reset_list" tlabel="imports.existing_products_action" :options="['no' => __('texts.generic.action.ignore'), 'disable' => __('texts.generic.action.disable')]" value="no" />
+                <div class="col">
+                    <x-larastrap::radios name="reset_list" tlabel="imports.existing_products_action" :options="[
+                        'no' => __('texts.generic.action.ignore'),
+                        'disable' => __('texts.generic.action.disable')
+                    ]" value="no" />
+
+                    @if($currentgas->manual_products_sorting)
+                        <x-larastrap::radios name="force_sort" tlabel="imports.force_sorting" :options="[
+                            'no' => __('texts.generic.no'),
+                            'yes' => __('texts.generic.yes')
+                        ]" value="no" />
+                    @endif
                 </div>
             </div>
 

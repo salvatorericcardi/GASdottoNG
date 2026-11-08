@@ -458,6 +458,7 @@ return array (
     'error_main' => '',
     'error_retry' => '',
     'existing_products_action' => '',
+    'force_sorting' => '',
     'no_products' => '',
   ),
   'invoices' =>

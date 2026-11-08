@@ -422,6 +422,7 @@ return array(
         'error_main' => 'Erreur durant le téléversement ou la lecture du fichier.',
         'error_retry' => 'Veuillez essayer de nouveau. Si le problème persiste, merci de le signaler aux développeurs de GASdotto : info@madbob.org',
         'existing_products_action' => 'Produits des commandes',
+        'force_sorting' => '',
         'no_products' => 'Aucun produit actualisable',
     ),
     'invoices' => array(
