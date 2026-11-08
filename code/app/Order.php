@@ -205,7 +205,7 @@ class Order extends Model
 
     public function printableHeader()
     {
-        return $this->printableName() . $this->headerIcons() . sprintf('<br/><small>%s</small>', $this->printableDates());
+        return $this->headerName() . $this->headerIcons() . sprintf('<br/><small>%s</small>', $this->printableDates());
     }
 
     public function getBookingURL()
@@ -824,6 +824,11 @@ class Order extends Model
     }
 
     /************************************************************* HasPicture */
+
+    public function hasPicture(): bool
+    {
+        return $this->supplier->hasPicture();
+    }
 
     public function getPictureUrlAttribute()
     {

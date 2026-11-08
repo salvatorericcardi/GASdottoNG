@@ -8,12 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
-
-use Auth;
 
 use App\Models\Concerns\ContactableTrait;
 use App\Models\Concerns\InCircles;
@@ -141,7 +140,7 @@ class User extends Authenticatable
 
     public function printableHeader()
     {
-        $ret = $this->formatAvatar() . $this->printableName();
+        $ret = $this->headerName();
 
         if ($this->isFriend() === false) {
             $ret .= $this->headerIcons();
@@ -187,11 +186,6 @@ class User extends Authenticatable
         }
 
         return false;
-    }
-
-    public function getPictureUrlAttribute()
-    {
-        return route('users.picture', $this->id);
     }
 
     public function sendPasswordResetNotification($token)
@@ -249,6 +243,13 @@ class User extends Authenticatable
     public function getSlugID()
     {
         return $this->username;
+    }
+
+    /************************************************************* HasPicture */
+
+    public function getPictureUrlAttribute()
+    {
+        return route('users.picture', $this->id);
     }
 
     /************************************************************** InCircles */

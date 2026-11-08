@@ -89,11 +89,6 @@ class Product extends Model
         return sprintf('%s::%s', $this->supplier_id, Str::slug($this->name));
     }
 
-    public function getPictureUrlAttribute()
-    {
-        return route('products.picture', $this->id);
-    }
-
     public function getFixedPackageSizeAttribute()
     {
         if ($this->portion_quantity <= 0) {
@@ -356,6 +351,13 @@ class Product extends Model
         ];
 
         return $ret;
+    }
+
+    /************************************************************* HasPicture */
+
+    public function getPictureUrlAttribute()
+    {
+        return route('products.picture', $this->id);
     }
 
     /************************************************************** Priceable */

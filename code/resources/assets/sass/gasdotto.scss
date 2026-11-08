@@ -153,6 +153,13 @@ html, body {
     border-radius: 50%;
     object-fit: cover;
 
+    &.inline {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        color: #FFF;
+        font-size: 10px;
+    }
 }
 
 .flowbox {
@@ -720,6 +727,11 @@ i[class^='bi-hidden-'] {
     &.loadable-list {
         .accordion-button {
             display: inline-block;
+
+            .header-name {
+                display: inline-flex;
+                align-items: center;
+            }
         }
     }
 }

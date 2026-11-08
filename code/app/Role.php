@@ -88,9 +88,9 @@ class Role extends Model implements AutoReadsFields
         return $ret;
     }
 
-    public function printableHeader()
+    protected function headerName()
     {
-        $ret = $this->printableName();
+        $name = $this->printableName();
 
         $step = $this;
         $iterated = [$step->id];
@@ -104,7 +104,7 @@ class Role extends Model implements AutoReadsFields
                     break;
                 }
 
-                $ret = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ret;
+                $name = '&nbsp;&nbsp;&nbsp;&nbsp;' . $name;
             }
             else {
                 break;
@@ -114,9 +114,7 @@ class Role extends Model implements AutoReadsFields
             $iterated[] = $step->id;
         }
 
-        $ret .= $this->headerIcons();
-
-        return $ret;
+        return sprintf('<span class="header-name">%s</span>', $name);
     }
 
     public function usersByTarget($target)

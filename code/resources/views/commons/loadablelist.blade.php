@@ -92,7 +92,7 @@ $no_filters = (empty($sorting_rules) && empty($filters) && is_null($legend));
         @endforeach
 
         @foreach($items as $index => $item)
-            <?php
+            @php
 
             $row_identifier = $identifier . '-' . sanitizeId($index);
 
@@ -122,7 +122,7 @@ $no_filters = (empty($sorting_rules) && empty($filters) && is_null($legend));
 
             $header = is_callable($header_function) ? $header_function($item) : $item->$header_function();
 
-            ?>
+            @endphp
 
             <x-larastrap::remoteaccordion :id="$row_identifier" :label_html="$header" :classes="$extra_class" :attributes="$extra_attributes" active="false">
             </x-larastrap::remoteaccordion>

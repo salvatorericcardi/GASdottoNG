@@ -214,9 +214,9 @@ class Aggregate extends Model
         });
     }
 
-    public function printableHeader()
+    public function headerName()
     {
-        return $this->headerIcons() . $this->formatAvatar() . $this->printableName() . sprintf('<br/><small class="text-muted">%s</small>', $this->printableDates());
+        return $this->formatAvatar() . $this->printableName() . sprintf('<br/><small class="text-muted">%s</small>', $this->printableDates());
     }
 
     public function printableUserHeader()
@@ -527,9 +527,26 @@ class Aggregate extends Model
 
     /************************************************************* HasPicture */
 
+    public function hasPicture(): bool
+    {
+        foreach($this->orders as $order) {
+            if ($order->hasPicture()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getPictureUrlAttribute()
     {
-        return $this->orders->first()->picture_url;
+        foreach($this->orders as $order) {
+            if ($order->hasPicture()) {
+                return $order->picture_url;
+            }
+        }
+
+        return null;
     }
 
     /********************************************************* ReducibleTrait */

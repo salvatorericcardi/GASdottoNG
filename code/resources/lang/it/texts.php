@@ -943,6 +943,7 @@ In futuro potrai accedere usando quest\'altro link, lo username "%[username]" e 
     ),
     'calendar_date' => 'Data sul Calendario',
     'date_reference' => 'Riferimento data',
+    'calendar_date' => 'Calendario Condiviso',
   ),
   'orders' =>
   array (
@@ -1366,6 +1367,7 @@ In futuro potrai accedere usando quest\'altro link, lo username "%[username]" e 
       'payment_method' => 'Eventuale nota sulle modalità di pagamento al fornitore. Visibile solo agli utenti abilitati alla modifica del fornitore',
       'orders_mode' => 'Eventuale nota sulle modalità per sottoporre gli ordini al fornitore. Visibile solo agli utenti abilitati alla modifica del fornitore',
       'send_notification_on_close' => 'Abilitando questa opzione, alla chiusura di ciascun ordine per questo fornitore la piattaforma provevderà a inoltrare automaticamente la tipologia di documento scelta. Ricorda: il Dettaglio Consegne contiene le prenotazioni divise per utente, mentre Riassunto Prodotti contiene solo le quantità complessivamente prenotate per ciascun prodotto',
+      'empty_list' => 'Non sono ancora stati creati fornitori. Per importare un nuovo listino: crea prima un nuovo fornitore e definisci i dati anagrafici, dopodiché selezionalo e - dal suo pannello "Prodotti" - seleziona "Importa CSV"',
     ),
     'enable_no_quantities' => 'Abilita Consegne Senza Quantità',
     'export_products' => 'Esporta Listino',

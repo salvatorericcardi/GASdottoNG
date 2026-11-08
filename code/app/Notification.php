@@ -92,7 +92,7 @@ class Notification extends Model implements Datable
         }
     }
 
-    public function printableHeader()
+    protected function headerName()
     {
         if ($this->permanent) {
             $ret = __('texts.notifications.permanent');
@@ -101,9 +101,7 @@ class Notification extends Model implements Datable
             $ret = $this->printableDate('start_date');
         }
 
-        $ret .= ' - ' . $this->printableName() . ' - ' . mb_substr(strip_tags($this->content), 0, 100) . '...';
-        $ret .= $this->headerIcons();
-        return $ret;
+        return $ret . ' - ' . $this->printableName() . ' - ' . mb_substr(strip_tags($this->content), 0, 100) . '...';
     }
 
     /**************************************************************** Datable */

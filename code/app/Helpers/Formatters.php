@@ -292,3 +292,31 @@ function publicGateRetrieveLink($encrypted)
     $string = baseDecrypt($encrypted);
     return json_decode($string);
 }
+
+/*
+    https://gist.github.com/mrkmg/1607621
+*/
+function colorFromText($text, $min_brightness = 100, $spec = 10)
+{
+    $hash = md5($text);
+    $colors = array();
+    for ($i = 0; $i < 3; $i++) {
+        $colors[$i] = max(array(round(((hexdec(substr($hash, $spec * $i, $spec))) / hexdec(str_pad('', $spec, 'F'))) * 255), $min_brightness));
+    }
+
+    if ($min_brightness > 0) {
+        while (array_sum($colors) / 3 < $min_brightness) {
+            for ($i = 0; $i < 3; $i++) {
+                $colors[$i] += 10;
+            }
+        }
+    }
+
+    $output = '';
+
+    for ($i = 0; $i < 3; $i++) {
+        $output .= str_pad(dechex($colors[$i]), 2, 0, STR_PAD_LEFT);
+    }
+
+    return $output;
+}

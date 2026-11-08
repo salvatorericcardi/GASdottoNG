@@ -64,7 +64,7 @@ trait GASModel
         return $this->printableName();
     }
 
-    public function printableHeader()
+    protected function headerName()
     {
         $avatar = '';
 
@@ -73,7 +73,12 @@ trait GASModel
             $avatar = $this->formatAvatar();
         }
 
-        return $avatar . $this->printableName() . $this->headerIcons();
+        return sprintf('<span class="header-name">%s%s</span>', $avatar, $this->printableName());
+    }
+
+    public function printableHeader()
+    {
+        return $this->headerName() . $this->headerIcons();
     }
 
     public function printableDate($name)

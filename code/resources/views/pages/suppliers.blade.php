@@ -37,6 +37,7 @@
             @include('commons.loadablelist', [
                 'identifier' => 'supplier-list',
                 'items' => $suppliers,
+                'empty_message' => __('texts.supplier.help.empty_list'),
                 'legend' => (object)[
                     'class' => App\Supplier::class
                 ],
